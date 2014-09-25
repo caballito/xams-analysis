@@ -1,0 +1,7 @@
+# Git will ignore the following patterns.
+# Shared objects and compiler files
+*.so
+*.d
+# Swap files.
+*.swp
+
