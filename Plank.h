@@ -120,7 +120,6 @@ public :
 	//
 	virtual TH1F* 	GetDriftTimeHisto(int nbins, double mintime, double maxtime);
 	virtual TH1F* 	GetS2WidthHisto(int nbins, double minwidth, double maxwidth);
-	//virtual TH1F* 	GetS1IntegralHisto(int nbins, double minint, double maxint);
 	virtual TH1F* 	GetS1IntegralHisto(int nbins, double minint, double maxint);
 	virtual TH1F* 	GetS2IntegralHisto(int nbins, double minint, double maxint);
 	virtual TH1F* 	GetS2FWHMHisto(int nbins, double minwidth, double maxwidth);
