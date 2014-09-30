@@ -1,0 +1,61 @@
+# This is the README file for the XAMS analysis code.
+# (The code collection will be on a GitHub repository
+#  at https://github.com/caballito/xams-analysis.git)
+#
+# created on 25/09/2014 by R. Schoen
+
+
+There is code for handling the data
+ a) the data of a single PMT, at 
+    /data/xenon/xams/pmt/PMT_initial_characterisation/, and
+ b) the data of the 2 PMTs inside the XAMS TPC, at
+    /data/xenon/xams/pmt/liquid_data/.
+
+
+We can divide the code into two groups for dealing with the 
+two different data sets:
+ a) for the single PMT
+   - RawTree.{C,h}            : raw data class,
+   - loadclass.C              : macro to load the RawTree class,
+   - read_waveforms.cc        : read in the raw data into a RawTree TTree,
+   - spe_analysis.cc          : analysis for single photo-electron spectra,
+ b) for the 2 PMTs
+   - RawTree2.{C,h}  the raw data class,
+   - read_2pmts.cc            : read in the raw data (ASCII .dat files),
+   - Waveform.{cpp,hpp}       : class for the binary waveform format,
+   - LecroyWFDecoder.{cpp,hpp}: class to decode the binary waveform format,
+   - read_binary.cc           : read in the raw data (binary .trc files),
+   - process_raw_data.cc      : invoke peak finder and write peak information,
+   - Plank.{C,h}              : processed data class with peak information,
+   - analyse_proc_data.cc     : make a set of histograms fo quality control,
+   - load_environment.C       : macro to compile all classes and functions.
+
+There are some macros to automate some boring tasks:
+   - analyse_all_macro.C      : run single p.e. analysis on (single) PMT data,
+   - analyse_proc_data_run3.C : load Plank trees and run kots(),
+   - data2tree_run3.C         : read raw data of first RUN3 measurements,
+   - fitsclices_s1cut.C       : fit slices of s2IntVDriftTime spectrum after s1Int cut,
+   - vomitscript.C            : run kots() on multiple measurements.
+
+
+A typical workflow for TPC data looks like this:
+ a) You have the raw data (in binary format "WORD") from the 
+    oscilloscope, i.e. one file per waveform per channel:
+    C<1,2>_<some identifier>_%05d.trc (5 digits with trailing 0)
+ b) Run load_environment.C to compile everything.
+ c) Run read_binary code on raw data directory.
+ d) You have the raw data in a TTree (RawTree). This class contains
+    the time resolution, the baseline (averaged over the first 2000
+    samples), the baseline spread and the corrected (i.e. baseline-
+    subtracted) waveform for each event for both PMTs.
+    The RawTree class has member functions to create simple
+    histograms (amplitude, integral, peak time) and the FindPeaks()
+    function.   
+ e) Run process_raw_data code on RawTree. This invokes the peak
+    finder.
+ f) You have the peak information per event per PMT in a TTree (Plank).
+    This class contains the time resolution, the number and parameters
+    of every identified peak per event.
+ g) Run analyse_proc_data code on Plank to make a collection of
+    histograms for a quick quality control of the data.
+
