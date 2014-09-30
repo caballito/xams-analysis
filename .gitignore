@@ -4,4 +4,6 @@
 *.d
 # Swap files.
 *.swp
-
+# Old backup files (with intermediate code changes).
+interim_code_backup/
+examine/
