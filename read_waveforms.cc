@@ -9,11 +9,8 @@
 #include "TString.h"
 #include "TFile.h"
 #include "TTree.h"
-//#include "TEntryList.h"
 #include "TH1.h"
-//#include "TH2.h"
 #include "TF1.h"
-//#include "TMath.h"
 #include "TLine.h"
 #include "TCanvas.h"
 #include <iostream>
@@ -45,7 +42,7 @@ int read(TString dir, TString voltage, TString waveformPattern,int nWaveforms){
 	float tInc ;	// Time increment.
 	float time[nMaxSamples] ;
 	float amplitude[nMaxSamples] ;
-	float camplitude[nMaxSamples] ; // Corrected amplitude (amplitude minus baseline)
+	float camplitude[nMaxSamples] ; // Corrected amplitude (amplitude minus baseline).
 	int nSamples ;
 	float baseline, baselineSpread ;
 	float peakAmplitude ;
@@ -115,7 +112,7 @@ int read(TString dir, TString voltage, TString waveformPattern,int nWaveforms){
 		baseline = base->GetMean() ;
 		baselineSpread = base->GetRMS() ;	// Returns standard deviation; NOT RMS!
 		
-		// Get peak height and position
+		// Get peak height and position.
 		peakAmplitude = 0 ;
 		peakBin = 2 ;
 		for (sample=0; sample<nSamples ; sample++){
@@ -126,15 +123,12 @@ int read(TString dir, TString voltage, TString waveformPattern,int nWaveforms){
 			// Get the corrected amplitudes.
 			camplitude[sample]=amplitude[sample]-baseline;
 		}
-		
 		/*cout << "++ This waveform has a baseline of (" << baseline * 1e3 << " +/- "
 			<< baselineSpread * 1e3 << ") mV " << endl
 			<< "   and a maximum peak height of " << peakAmplitude * 1e3 << " mV at "
 			<< peakBin * tInc * 1e9 << " ns." << endl ;
 		*/
-
 		tree->Fill() ;
-
 	}	// End of loop over waveforms.
 	
 	delete base ;

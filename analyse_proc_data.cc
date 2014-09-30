@@ -5,20 +5,12 @@
  *                 -- R.Schoen, July 2014 *
  ******************************************/
 
-//#include "TSystem.h"
 #include "TString.h"
 #include "TFile.h"
-//#include "TTree.h"
 #include "TH1.h"
 #include "TH2.h"
-//#include "TF1.h"
-//#include "TLine.h"
-//#include "TCanvas.h"
 #include <iostream>
-//#include <iomanip>
-//#include <sstream>
 #include <fstream>
-//#include <vector>
 
 #include "Plank.h"
 
@@ -29,7 +21,6 @@ int kots(Plank* plank, TString outFileName){
 	cout << "++ " << plank->GetAcceptedEntries() << " events of " << nEvents << " in total are accepted." << endl ;
 	// Create output file.
 	TString outFilePath = "/data/xenon/xams/pmt/liquid_data/results/" + outFileName + ".root" ;
-	//TString outFilePath = "/data/xenon/xams/pmt/liquid_data/results/r3m35.root" ;
 	TFile outFile(outFilePath,"recreate") ;
 	if (!outFile.IsOpen()){
 		cout << "EE Couldn't open output file!" << endl ;
